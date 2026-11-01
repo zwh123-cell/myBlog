@@ -23,8 +23,8 @@ mybatis-plus:
       id-type: auto
 
 jwt:
-  access-secret: change-me-access-secret-key
-  refresh-secret: change-me-refresh-secret-key
+  access-secret: change-me-access-secret-key-0123456789abcdef
+  refresh-secret: change-me-refresh-secret-key-0123456789abcdef
   access-expiration: 900000        # 15 分钟（毫秒）
   refresh-expiration: 604800000    # 7 天（毫秒）
 

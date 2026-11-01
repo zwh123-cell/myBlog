@@ -1,3 +1,5 @@
+import { getAccessToken } from "@/lib/auth";
+
 // 服务端渲染优先使用 API_BASE_URL（Docker 内为 http://server:8080），
 // 客户端请求使用 NEXT_PUBLIC_API_BASE_URL（浏览器访问宿主机的 localhost）。
 const API_BASE_URL =
@@ -19,4 +21,82 @@ export async function getArticles() {
 
   const json = await res.json();
   return json.data ?? [];
+}
+
+/**
+ * 统一请求封装：拼接基础地址、设置 JSON 头、解析统一响应结构。
+ * 后端约定 code === 0 表示成功，非 0 时抛出携带 message 的异常。
+ */
+async function request(path, options = {}) {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(`请求失败: ${res.status}`);
+  }
+
+  const json = await res.json();
+  if (json.code !== 0) {
+    throw new Error(json.message || `请求失败: ${json.code}`);
+  }
+  return json.data;
+}
+
+/**
+ * 用户注册。
+ */
+export async function register(data) {
+  return request("/api/v1/auth/register", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+/**
+ * 用户登录，成功后返回 { accessToken, refreshToken, user }。
+ */
+export async function login(data) {
+  return request("/api/v1/auth/login", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+/**
+ * 刷新访问令牌。
+ */
+export async function refresh(refreshToken) {
+  return request("/api/v1/auth/refresh", {
+    method: "POST",
+    body: JSON.stringify({ refreshToken }),
+  });
+}
+
+/**
+ * 用户登出，使刷新令牌失效。
+ */
+export async function logout(refreshToken) {
+  return request("/api/v1/auth/logout", {
+    method: "POST",
+    body: JSON.stringify({ refreshToken }),
+  });
+}
+
+/**
+ * 携带访问令牌发起需认证的请求，自动注入 Authorization 头。
+ */
+export async function authFetch(path, options = {}) {
+  const accessToken = getAccessToken();
+  return request(path, {
+    ...options,
+    headers: {
+      ...(options.headers || {}),
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+    },
+  });
 }

@@ -14,44 +14,47 @@ export default async function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-6 sm:p-10">
-      <div className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-bold text-gray-900">我的博客</h1>
-        <p className="mt-2 text-gray-600">
+    <main className="mx-auto max-w-5xl px-6 py-10">
+      <section className="py-10 text-center sm:py-14">
+        <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+          我的博客
+        </h1>
+        <p className="mt-4 text-lg text-slate-600">
           基于 Next.js + Spring Boot + MySQL 的轻量级博客
         </p>
+      </section>
 
-        {error ? (
-          <p className="mt-8 rounded-lg bg-amber-50 p-4 text-amber-700">
-            {error}
+      {error ? (
+        <div className="card p-6 text-center text-amber-700">{error}</div>
+      ) : articles.length === 0 ? (
+        <div className="card p-10 text-center">
+          <p className="text-lg font-medium text-slate-500">暂无文章</p>
+          <p className="mt-2 text-sm text-slate-400">
+            后续文章发布后会自动显示在这里
           </p>
-        ) : articles.length === 0 ? (
-          <p className="mt-8 rounded-lg bg-white p-6 text-gray-500 shadow-sm">
-            暂无文章
-          </p>
-        ) : (
-          <ul className="mt-8 space-y-4">
-            {articles.map((article) => (
-              <li
-                key={article.id}
-                className="rounded-lg bg-white p-6 shadow-sm transition hover:shadow-md"
-              >
-                <h2 className="text-xl font-semibold text-gray-900">
-                  {article.title}
-                </h2>
-                {article.summary && (
-                  <p className="mt-2 text-gray-600">{article.summary}</p>
-                )}
-                {article.publishedAt && (
-                  <p className="mt-3 text-sm text-gray-400">
-                    {new Date(article.publishedAt).toLocaleDateString("zh-CN")}
-                  </p>
-                )}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        </div>
+      ) : (
+        <ul className="space-y-4">
+          {articles.map((article) => (
+            <li
+              key={article.id}
+              className="card p-6 transition hover:shadow-md"
+            >
+              <h2 className="text-xl font-semibold text-slate-900">
+                {article.title}
+              </h2>
+              {article.summary && (
+                <p className="mt-2 text-slate-600">{article.summary}</p>
+              )}
+              {article.publishedAt && (
+                <p className="mt-4 text-sm text-slate-400">
+                  {new Date(article.publishedAt).toLocaleDateString("zh-CN")}
+                </p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }

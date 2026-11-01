@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB",
+      "Microsoft YaHei", sans-serif;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900;
+  }
+
+  .input-field {
+    @apply mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500;
+  }
+
+  .label-field {
+    @apply block text-sm font-medium text-slate-700;
+  }
+
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .auth-card {
+    @apply w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-8 shadow-lg;
+  }
+}

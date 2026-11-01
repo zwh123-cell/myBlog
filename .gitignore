@@ -1,5 +1,6 @@
 # ---------- Node / Next.js ----------
 node_modules/
+package-lock.json
 .next/
 out/
 build/
@@ -41,3 +42,11 @@ Desktop.ini
 docker/data/
 mysql_data/
 *.log
+
+# ---------- OpenSpec / Agent 配置 ----------
+openspec/
+AGENTS.md
+.agents/
+
+# ---------- 工具/测试临时产物 ----------
+.playwright-mcp/
