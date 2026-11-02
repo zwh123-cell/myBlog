@@ -100,3 +100,48 @@ export async function authFetch(path, options = {}) {
     },
   });
 }
+
+/**
+ * 按 slug 获取已发布文章详情。
+ */
+export async function getArticleBySlug(slug) {
+  return request(`/api/v1/articles/${encodeURIComponent(slug)}`, {
+    cache: "no-store",
+  });
+}
+
+/**
+ * 发布文章或保存草稿（需登录）。
+ */
+export async function createArticle(data) {
+  return authFetch("/api/v1/articles", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+/**
+ * 作者编辑自己的文章（需登录）。
+ */
+export async function updateArticle(id, data) {
+  return authFetch(`/api/v1/articles/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
+}
+
+/**
+ * 作者删除自己的文章（需登录）。
+ */
+export async function deleteArticle(id) {
+  return authFetch(`/api/v1/articles/${id}`, {
+    method: "DELETE",
+  });
+}
+
+/**
+ * 作者加载自己的文章原始内容（含草稿），用于编辑回显（需登录）。
+ */
+export async function getArticleRaw(id) {
+  return authFetch(`/api/v1/articles/${id}/raw`);
+}

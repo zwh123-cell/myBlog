@@ -1,5 +1,6 @@
 import "./globals.css";
 import Link from "next/link";
+import SiteNav from "@/components/SiteNav";
 
 export const metadata = {
   title: "我的博客",
@@ -18,17 +19,7 @@ export default function RootLayout({ children }) {
             >
               我的博客
             </Link>
-            <div className="flex items-center gap-1">
-              <Link href="/" className="btn-ghost">
-                首页
-              </Link>
-              <Link href="/login" className="btn-ghost">
-                登录
-              </Link>
-              <Link href="/register" className="btn-primary">
-                注册
-              </Link>
-            </div>
+            <SiteNav />
           </nav>
         </header>
         {children}

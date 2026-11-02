@@ -5,3 +5,7 @@ out
 .env
 .env.local
 npm-debug.log*
+e2e
+playwright.config.js
+playwright-report
+test-results

@@ -50,3 +50,5 @@ AGENTS.md
 
 # ---------- 工具/测试临时产物 ----------
 .playwright-mcp/
+web/test-results/
+web/playwright-report/

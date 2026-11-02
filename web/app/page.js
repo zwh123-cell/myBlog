@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getArticles } from "@/lib/api";
 
 // 强制动态渲染，避免构建时因后端未启动而失败
@@ -36,21 +37,23 @@ export default async function Home() {
       ) : (
         <ul className="space-y-4">
           {articles.map((article) => (
-            <li
-              key={article.id}
-              className="card p-6 transition hover:shadow-md"
-            >
-              <h2 className="text-xl font-semibold text-slate-900">
-                {article.title}
-              </h2>
-              {article.summary && (
-                <p className="mt-2 text-slate-600">{article.summary}</p>
-              )}
-              {article.publishedAt && (
-                <p className="mt-4 text-sm text-slate-400">
-                  {new Date(article.publishedAt).toLocaleDateString("zh-CN")}
-                </p>
-              )}
+            <li key={article.id}>
+              <Link
+                href={`/articles/${article.slug}`}
+                className="card block p-6 transition hover:shadow-md"
+              >
+                <h2 className="text-xl font-semibold text-slate-900">
+                  {article.title}
+                </h2>
+                {article.summary && (
+                  <p className="mt-2 text-slate-600">{article.summary}</p>
+                )}
+                {article.publishedAt && (
+                  <p className="mt-4 text-sm text-slate-400">
+                    {new Date(article.publishedAt).toLocaleDateString("zh-CN")}
+                  </p>
+                )}
+              </Link>
             </li>
           ))}
         </ul>

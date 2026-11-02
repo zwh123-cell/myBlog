@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { login } from "@/lib/api";
-import { isLoggedIn, setTokens } from "@/lib/auth";
+import { isLoggedIn, setCurrentUser, setTokens } from "@/lib/auth";
 
 /**
  * 登录页：邮箱 + 密码登录，成功后保存令牌并跳转首页。
@@ -29,6 +29,7 @@ export default function LoginPage() {
     try {
       const data = await login({ email, password });
       setTokens(data.accessToken, data.refreshToken);
+      setCurrentUser(data.user);
       router.replace("/");
     } catch (err) {
       setError(err.message || "登录失败");

@@ -3,6 +3,7 @@
 
 const ACCESS_TOKEN_KEY = "boke_access_token";
 const REFRESH_TOKEN_KEY = "boke_refresh_token";
+const CURRENT_USER_KEY = "boke_current_user";
 
 /**
  * 判断当前是否运行在浏览器环境。
@@ -43,6 +44,29 @@ export function clearTokens() {
   if (!isBrowser()) return;
   window.localStorage.removeItem(ACCESS_TOKEN_KEY);
   window.localStorage.removeItem(REFRESH_TOKEN_KEY);
+  window.localStorage.removeItem(CURRENT_USER_KEY);
+}
+
+/**
+ * 保存当前登录用户信息，供前端判断文章归属等 UI 场景使用。
+ */
+export function setCurrentUser(user) {
+  if (!isBrowser()) return;
+  window.localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+}
+
+/**
+ * 获取当前登录用户信息，未登录或解析失败时返回 null。
+ */
+export function getCurrentUser() {
+  if (!isBrowser()) return null;
+  const raw = window.localStorage.getItem(CURRENT_USER_KEY);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
 /**
