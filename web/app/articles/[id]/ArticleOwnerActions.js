@@ -18,7 +18,21 @@ export default function ArticleOwnerActions({ articleId, authorId }) {
   if (!isOwner) return null;
 
   return (
-    <Link href={`/articles/${articleId}/edit`} className="btn-ghost shrink-0">
+    <Link href={`/articles/${articleId}/edit`} className="btn-outline shrink-0">
+      <svg
+        aria-hidden="true"
+        className="h-4 w-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="m15 5 4 4M4 20l1-4.5L16.5 4a1.8 1.8 0 0 1 2.5 0l1 1a1.8 1.8 0 0 1 0 2.5L8.5 19 4 20Z"
+        />
+      </svg>
       编辑
     </Link>
   );

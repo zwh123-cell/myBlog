@@ -19,21 +19,29 @@ export default function WritePage() {
     }
   }, [router]);
 
+  /**
+   * 提交文章并跳到详情页。
+   * 发布后先刷新路由缓存，确保回到首页时列表包含刚发布的文章。
+   */
   async function handleSubmit(data) {
     const article = await createArticle(data);
+    router.refresh();
     router.replace(`/articles/${article.slug}`);
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-        写文章
-      </h1>
-      <p className="mt-2 text-sm text-slate-500">
-        使用 Markdown 编写正文，右侧实时预览
-      </p>
+    <main className="page-wide py-10 sm:py-12">
+      <header>
+        <span className="badge">创作</span>
+        <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+          写文章
+        </h1>
+        <p className="mt-2 text-sm text-slate-500">
+          使用 Markdown 编写正文，右侧实时预览
+        </p>
+      </header>
 
-      <div className="mt-6">
+      <div className="mt-7">
         <ArticleEditor initial={{ status: "draft" }} onSubmit={handleSubmit} />
       </div>
     </main>
