@@ -21,9 +21,11 @@ export default function WritePage() {
 
   /**
    * 提交文章并跳到详情页。
+   * 发布后先刷新路由缓存，确保回到首页时列表包含刚发布的文章。
    */
   async function handleSubmit(data) {
     const article = await createArticle(data);
+    router.refresh();
     router.replace(`/articles/${article.slug}`);
   }
 
